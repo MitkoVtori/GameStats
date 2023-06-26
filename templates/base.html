@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>GameStats</title>
+</head>
+
+<body>
+<div id="box">
+    <header>
+
+        <!-- navigation bar -->
+        <h1><a class="home" href="{% url 'home' %}">Home</a></h1>
+        <nav>
+            <!-- if user has a profile -->
+            <a href="#">Games</a>
+            <a href="#">Add Game</a>
+            <a href="#"><u>Report Problem</u></a>
+            <!-- if user is staff -->
+            <a href="#">Problems</a>
+            <a href="#">Staff</a>
+            <!-- if user has a profile -->
+            <a href="#"><u>Profile</u></a>
+            <a href="#"><u>Logout</u></a>
+            <!-- if user is superuser -->
+            <a href="/admin/">Admin</a>
+            <!-- if user has no profile -->
+            <p><a href="#">Login</a>/<a href="#">Register</a></p>
+
+        </nav>
+    </header>
+
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- footer -->
+    <footer>
+        &copy;MitkoVtori 2023. All rights reserved.
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+psycopg2 - pip install psycopg2
+# Used for postgreSQL database
+
