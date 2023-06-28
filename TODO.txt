@@ -1,12 +1,12 @@
-- 9 web pages.
+- 8 web pages.
 
 - 4 class-based views.
 
-- 5 independent models
+- 4 independent models
 
-- 5 forms
+- 4 forms
 
-- 4 templates
+- 3 templates
 
 - login/register/logout
 
