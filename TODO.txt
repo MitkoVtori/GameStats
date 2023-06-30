@@ -1,14 +1,8 @@
-- 8 web pages.
+- 4 web pages.
 
-- 4 class-based views.
+- 3 independent models
 
-- 4 independent models
-
-- 4 forms
-
-- 3 templates
-
-- login/register/logout
+- 2 forms
 
 - private part / accessable only by authenticated users and admins
 
@@ -33,8 +27,6 @@ o When validating data, show appropriate messages to the user
 • Writing asynchronous view/s somewhere in the project - View that shows latest information without refreshing the page
 
 • Extend your Django project with REST Capabilities
-
-• Extend Django user
 
 • Host the application in a cloud environment
 
