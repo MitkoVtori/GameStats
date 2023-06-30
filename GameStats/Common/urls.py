@@ -3,5 +3,6 @@ from GameStats.Common import views
 
 
 urlpatterns = [
-    path('', views.HomePageView.as_view(), name='home')
+    path('', views.HomePageView.as_view(), name='home'),
+    path('access/denied/', views.NoAccessView.as_view(), name="no-access")
 ]

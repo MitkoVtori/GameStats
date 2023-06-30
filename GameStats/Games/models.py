@@ -8,7 +8,7 @@ class Game(models.Model):
 
     title = models.CharField(max_length=25, validators=[MinLengthValidator(
         2, message="game title must be at least 2 characters long!"
-    )])
+    )], unique=True, error_messages={"unique": "Game with this name already exists!"})
 
     genre = models.CharField(max_length=10, choices=[
         ("Action", "Action"),

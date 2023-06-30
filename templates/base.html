@@ -24,11 +24,11 @@
             <a href="#">Staff</a>
             <!-- if user has a profile -->
             <a href="#"><u>Profile</u></a>
-            <a href="#"><u>Logout</u></a>
+            <a href="{% url 'logout' %}"><u>Logout</u></a>
             <!-- if user is superuser -->
             <a href="/admin/">Admin</a>
             <!-- if user has no profile -->
-            <p><a href="#">Login</a>/<a href="#">Register</a></p>
+            <p><a href="{% url 'login' %}">Login</a>/<a href="{% url 'register' %}">Register</a></p>
 
         </nav>
     </header>

@@ -18,13 +18,19 @@
 }
 
 .brand-logo {
-    height: 80px;
-    width: 80px;
-    background: url("../images/icon-gamepad-2.png");
+    height: 100px;
+    width: 100px;
     margin: auto;
     border-radius: 50%;
     box-sizing: border-box;
     box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px white;
+}
+
+.brand-logo img {
+    position: absolute;
+    top: 7.5%;
+    left: 45%;
+    width: 50px;
 }
 
 .container > h1 {
@@ -142,4 +148,8 @@ textarea {
     border-right-color: #ecf0f3;
     margin-top: 7px;
     box-shadow: inset 6px 6px 6px #c0c2c5, inset -6px -6px 6px white;
+}
+
+.errorlist li {
+    color: #D991E9;
 }
