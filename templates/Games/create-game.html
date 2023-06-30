@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if not request.user.is_staff and not request.user.is_superuser %}
-    <p class="no-articles">You can't create games!</p>
-    {% else %}
     <section id="create-page" class="auth">
         <form action="{% url 'create game' %}" id="create" method="post" enctype="multipart/form-data">
             <div class="container">
@@ -27,5 +24,4 @@
             </div>
         </form>
     </section>
-    {% endif %}
 {% endblock %}
