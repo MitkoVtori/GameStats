@@ -2,7 +2,7 @@
 
 {% block content %}
     <section id="register-page" class="content auth">
-        <form action="{% url 'login' %}" id="register" method="post">
+        <form action="{% url 'login' %}?next={{request.GET.next}}" id="register" method="post">
             {% csrf_token %}
             <div class="container">
                 <h1>Login</h1>

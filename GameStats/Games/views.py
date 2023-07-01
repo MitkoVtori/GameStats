@@ -7,7 +7,7 @@ from GameStats.Games.forms import GameForm
 class CreateGame(LoginRequiredMixin, CreateView):
     template_name = "Games/create-game.html"
     form_class = GameForm
-    login_url = '/users/login/'
+    success_url = '/'
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_staff and not request.user.is_superuser:
@@ -18,5 +18,3 @@ class CreateGame(LoginRequiredMixin, CreateView):
         form = super().get_form(form_class=form_class)
         form.fields['creator'].initial = self.request.user.get_username()
         return form
-
-    success_url = "/"

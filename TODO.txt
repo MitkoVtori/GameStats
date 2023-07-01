@@ -1,18 +1,13 @@
-- 4 web pages.
+- 3 web pages.
 
 - 3 independent models
 
-- 2 forms
-
-- private part / accessable only by authenticated users and admins
-
-- customized admin site / only admins
+- 1 forms
 
 - At least 5 custom options (in total) to the admin interface (e.g., filters, list display, ordering, etc.).
 
 - Authenticated users (private part) have full CRUD for all their created content
 
-- at least 2 groups of admins (roles) / superusers / staff / manageable from admin site / error-safe
 
 
 • Implement Exception Handling and Data Validation to avoid crashes when invalid data is entered
