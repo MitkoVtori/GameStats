@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import UserManager, PermissionsMixin
 from django.core.validators import MinLengthValidator
 from django.db import models
-from GameStats.Profile.validators import letters_numbers_underscores, only_letters
+from GameStats.Profile.validators import letters_numbers_underscores, only_letters, image_size
 
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
@@ -22,6 +22,8 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+
+    image = models.ImageField(upload_to="images", validators=[image_size])
 
     date_joined = models.DateTimeField(auto_now_add=True)
 

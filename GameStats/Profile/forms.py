@@ -8,9 +8,18 @@ from GameStats.Profile.validators import min_length, must_have_digit_and_letter
 UserModel = get_user_model()
 
 
+class AppUserAdministrationForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = '__all__'
+
+
 class AppUserCreationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, validators=[min_length, must_have_digit_and_letter])
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Username"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email address"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}),
+                               validators=[min_length, must_have_digit_and_letter])
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Repeat password"}))
 
     class Meta:
         model = UserModel
@@ -35,6 +44,9 @@ class AppUserCreationForm(forms.ModelForm):
 
 
 class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Username"}), label='')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}), label='')
+
     error_messages = {
         'invalid_login': _(
             "Invalid username or password!"
@@ -45,4 +57,3 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = UserModel
         fields = ["username", "password"]
-

@@ -23,7 +23,7 @@
             <a href="#">Problems</a>
             <a href="#">Staff</a>
             <!-- if user has a profile -->
-            <a href="#"><u>Profile</u></a>
+            <a href="{% url 'user' %}"><u>Profile</u></a>
             <a href="{% url 'logout' %}"><u>Logout</u></a>
             <!-- if user is superuser -->
             <a href="/admin/">Admin</a>

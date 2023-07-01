@@ -1,8 +1,9 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
+from GameStats.Games.models import Game
 from GameStats.Profile.forms import AppUserCreationForm, LoginForm
 
 
@@ -29,9 +30,6 @@ class UserLogin(LoginView):
     form_class = LoginForm
     redirect_authenticated_user = True
 
-    def get_success_url(self):
-        return reverse_lazy('home')
-
 
 class LogoutPageView(TemplateView):
     template_name = 'Profile/logout.html'
@@ -46,6 +44,13 @@ class LogoutPageView(TemplateView):
 class UserLogout(LogoutView):
     template_name = 'Profile/logout.html'
 
-    def get_success_url(self):
-        return reverse_lazy("home")
 
+class UserDetails(LoginRequiredMixin, TemplateView):
+    template_name = "Profile/details.html"
+
+    def get_context_data(self, **kwargs):
+        context = {
+            "user": self.request.user,
+            "games": Game.objects.filter(creator=self.request.user.get_username())
+        }
+        return context
