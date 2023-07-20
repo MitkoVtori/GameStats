@@ -1,10 +1,13 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, TemplateView, UpdateView
 from GameStats.Games.models import Game
-from GameStats.Profile.forms import AppUserCreationForm, LoginForm
+from GameStats.Profile.forms import AppUserCreationForm, LoginForm, EditAppUserForm, ChangePasswordForm
+
+UserModel = get_user_model()
 
 
 class CreateUser(CreateView):
@@ -54,3 +57,29 @@ class UserDetails(LoginRequiredMixin, TemplateView):
             "games": Game.objects.filter(creator=self.request.user.get_username())
         }
         return context
+
+
+class EditUser(UpdateView):
+    model = UserModel
+    template_name = "Profile/edit-profile.html"
+    form_class = EditAppUserForm
+    success_url = reverse_lazy("user")
+
+    def get_object(self, **kwargs):
+        return self.request.user
+
+
+class ChangeUserPassword(UpdateView):
+    model = UserModel
+    template_name = "Profile/change-password.html"
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy("user")
+
+    def get_object(self, **kwargs):
+        return self.request.user
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+
+        login(self.request, self.object)
+        return result
