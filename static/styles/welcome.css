@@ -73,26 +73,26 @@
     margin-top: 20px;
     padding: 50px;
     margin-left: 50px;
+    box-shadow: 3px 3px 3px #353839, -3px -3px 3px #353839;
     background-position: right 35% bottom 45%;
     box-sizing: border-box;
     border-radius: 15px;
     float: left;
     height: auto;
-    color: rgb(204, 144, 131);
+    color: #0884E6;
 }
 
 .image-wrap {
     width: 250px;
     height: 250px;
-    display: inline-block;
-    border-radius: 50%;
+    border-radius: 30%;
     overflow: hidden;
     position: relative;
     text-align: center;
 }
 
 .image-wrap>img {
-    max-width: 100%;
+    max-width: 120%;
 }
 
 .game>h3 {

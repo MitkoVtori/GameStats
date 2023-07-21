@@ -106,6 +106,7 @@
 .buttons {
     height: 10%;
     text-align: right;
+    padding: 1%;
 }
 
 .button {

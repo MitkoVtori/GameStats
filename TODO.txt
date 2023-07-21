@@ -1,6 +1,4 @@
-- 2 web pages.
-
-- 3 independent models
+- 1 independent models
 
 - At least 5 custom options (in total) to the admin interface (e.g., filters, list display, ordering, etc.).
 

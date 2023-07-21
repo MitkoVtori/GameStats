@@ -1,11 +1,13 @@
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
 from GameStats.Games.models import Game
-from GameStats.Profile.forms import AppUserCreationForm, LoginForm, EditAppUserForm, ChangePasswordForm
+from GameStats.Profile.forms import AppUserCreationForm, LoginForm, EditAppUserForm, ChangePasswordForm, \
+    DeleteAppUserForm
 
 UserModel = get_user_model()
 
@@ -59,7 +61,7 @@ class UserDetails(LoginRequiredMixin, TemplateView):
         return context
 
 
-class EditUser(UpdateView):
+class EditUser(LoginRequiredMixin, UpdateView):
     model = UserModel
     template_name = "Profile/edit-profile.html"
     form_class = EditAppUserForm
@@ -69,7 +71,7 @@ class EditUser(UpdateView):
         return self.request.user
 
 
-class ChangeUserPassword(UpdateView):
+class ChangeUserPassword(LoginRequiredMixin, UpdateView):
     model = UserModel
     template_name = "Profile/change-password.html"
     form_class = ChangePasswordForm
@@ -83,3 +85,26 @@ class ChangeUserPassword(UpdateView):
 
         login(self.request, self.object)
         return result
+
+
+class DeleteUser(LoginRequiredMixin, DeleteView):
+    template_name = "Profile/delete.html"
+    form_class = DeleteAppUserForm
+    success_url = reverse_lazy("home")
+
+    def get_object(self, **kwargs):
+        return self.request.user
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields['username'].initial = self.request.user.get_username()
+        return form
+
+    def form_invalid(self, form):
+        form.add_error("password", "Invalid password")
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        self.request.user.delete()
+        return HttpResponseRedirect(success_url)

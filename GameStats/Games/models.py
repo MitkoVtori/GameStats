@@ -23,3 +23,22 @@ class Game(models.Model):
 
     creator = models.CharField() # request.user
 
+
+class Comment(models.Model):
+
+    comment = models.TextField(max_length=500)
+    game = models.CharField() # game title
+
+
+class Rating(models.Model):
+
+    rating = models.IntegerField(choices=[
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5)
+    ])
+    comment = models.IntegerField() # comment id
+    game = models.CharField() # game title
+    creator = models.CharField() # AppUser username

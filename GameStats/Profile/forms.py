@@ -92,3 +92,12 @@ class ChangePasswordForm(forms.ModelForm):
             user.save()
         return user
 
+
+class DeleteAppUserForm(AuthenticationForm):
+    username = forms.CharField(disabled=True)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Your password"}), label='')
+
+    class Meta:
+        model = UserModel
+        fields = ["username", "password"]
+
