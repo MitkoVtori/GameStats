@@ -16,7 +16,7 @@
         <h1><a class="home" href="{% url 'home' %}">Home</a></h1>
         <nav>
             <!-- if user has a profile -->
-            <a href="#">Games</a>
+            <a href="{% url 'all-games' %}">Games</a>
             <a href="{% url 'create game' %}">Add Game</a>
             <a href="#"><u>Report Problem</u></a>
             <!-- if user is staff -->
