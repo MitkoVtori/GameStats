@@ -1,17 +1,10 @@
-from GameStats.Games.models import Rating, Comment
+from GameStats.Games.models import Comment
 
 
 def game_rating_generator(game_title):
-    all_ratings = Rating.objects.filter(game=game_title)
+    all_ratings = Comment.objects.filter(game=game_title)
     try:
-        return sum([rating.rating for rating in all_ratings]) / len(all_ratings)
+        return f"{(sum([rating.rating for rating in all_ratings]) / len(all_ratings)):.2f}"
     except ZeroDivisionError:
         return "---"
 
-
-def next_comment_id_generator():
-    new_comment = Comment(comment="Some", game="Something")
-    new_comment.save()
-    next_id = new_comment.id + 1
-    new_comment.delete()
-    return next_id
