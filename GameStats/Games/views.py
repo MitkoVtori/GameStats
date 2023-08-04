@@ -3,8 +3,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
-from GameStats.Games.forms import GameForm, CommentGameForm, RateGameForm
-from GameStats.Games.generators import game_rating_generator, next_comment_id_generator
+from GameStats.Games.forms import GameForm, CommentGameForm
+from GameStats.Games.generators import game_rating_generator
 from GameStats.Games.models import Game, Comment
 
 
@@ -42,25 +42,20 @@ def game_details(request, pk):
 
 
 @login_required
-def comment_game(request, title):
-    game = Game.objects.get(title=title)
-    comment_creator = request.user
+def comment_game(request, pk):
+    game = Game.objects.get(pk=pk)
 
     comment_form = CommentGameForm(request.POST or None)
-    rating_form = RateGameForm(request.POST or None)
 
     comment_form.fields["game"].initial = game.title
-    rating_form.fields["game"].initial = game.title
-    rating_form.fields["comment"].initial = next_comment_id_generator
-    rating_form.fields["creator"].inital = comment_creator
+    comment_form.fields["creator"].initial = request.user.get_username()
 
     context = {
-        "rating": rating_form,
-        "comment": comment_form
+        "form": comment_form,
+        'pk': pk,
     }
 
-    if rating_form.is_valid() and comment_form.is_valid():
-        rating_form.save()
+    if comment_form.is_valid():
         comment_form.save()
         return redirect("game-details", pk=game.id)
 

@@ -2,16 +2,16 @@
 
 {% block content %}
     <section id="register-page" class="content auth">
-        <form action="{% url 'add-comment' rating.game %}" id="register" method="post">
+        <form action="{% url 'add-comment' pk %}" id="register" method="post">
             {% csrf_token %}
             <div class="container">
                 <h1>Add Comment</h1>
 
-                {{ rating.errors.rating }}
-                {{ comment.errors.comment }}
+                {{ form.errors.rating }}
+                {{ form.errors.comment }}
                 <label for="id_rating">Rate game:</label>
-                {{ rating.rating }}
-                {{ comment.comment }}
+                {{ form.rating }}
+                {{ form.comment }}
 
                 <input class="btn submit" type="submit" value="Comment">
             </div>

@@ -1,4 +1,4 @@
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models
 from GameStats.Games.validators import image_size
 
@@ -26,19 +26,14 @@ class Game(models.Model):
 
 class Comment(models.Model):
 
-    comment = models.TextField(max_length=500)
-    game = models.CharField() # game title
-
-
-class Rating(models.Model):
-
     rating = models.IntegerField(choices=[
-        (1, 1),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5)
+        (1, "⭐"),
+        (2, "⭐⭐"),
+        (3, "⭐⭐⭐"),
+        (4, "⭐⭐⭐⭐"),
+        (5, "⭐⭐⭐⭐⭐")
     ])
-    comment = models.IntegerField() # comment id
+    comment = models.TextField(validators=[MaxLengthValidator(250,
+                                                              message="Comment can't be more than 250 characters long!")])
     game = models.CharField() # game title
-    creator = models.CharField() # AppUser username
+    creator = models.CharField()  # AppUser username
