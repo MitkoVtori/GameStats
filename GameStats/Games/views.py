@@ -61,3 +61,8 @@ def comment_game(request, pk):
 
     return render(request, "Games/add-comment.html", context)
 
+
+def comments(request, game):
+    all_comments = Comment.objects.filter(game=game)
+
+    return render(request, "Games/comments.html", {"comments": all_comments})

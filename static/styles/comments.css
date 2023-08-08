@@ -1,0 +1,20 @@
+.comment {
+    position: relative;
+    top: 50px;
+    left: 31%;
+    background: white;
+    width: 500px;
+    text-align: center;
+}
+
+.username {
+    position: absolute;
+    font-size: 20px;
+    color: #338AFF;
+    top: 7px;
+    left: 50px;
+}
+
+.img {
+    width: 45px;
+}

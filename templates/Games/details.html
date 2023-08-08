@@ -24,7 +24,7 @@
                 <a href="#" class="button">Edit</a>
                 <a href="#" class="button">Delete</a>
                 <!-- anyone can see -->
-                <a href="#" class="button">Comments</a>
+                <a href="{% url 'comments' game.title %}" class="button">Comments</a>
                 <!-- if not owner and .is_authenticated -->
                 <a href="{% url 'add-comment' game.id %}" class="button">Rate</a>
             </div>

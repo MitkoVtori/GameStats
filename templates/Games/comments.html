@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'styles/comments.css' %}">
+
+    <div class="comment">
+        <h1 class="username">Sasho the krika</h1>
+        <img class="img" src="{% static 'images/default-user.jpg' %}">
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>This is the best game ever made! it has so many features, that I want to play it all day long! and no matter what you say about my english, i am da best!</p>
+    </div>
+    <div class="comment">
+        <h1 class="username">FaceTheReveal</h1>
+        <img class="img" src="{% static 'images/default-user.jpg' %}">
+        <p>⭐⭐⭐</p>
+        <p>no matter what you say about my english, i am da best!</p>
+    </div>
+    <div class="comment">
+        <h1 class="username">TheMonstersAreTHeTruck</h1>
+        <img class="img" src="{% static 'images/default-user.jpg' %}">
+        <p>⭐</p>
+        <p>g</p>
+    </div>
+    <div class="comment">
+        <h1>Comments for game</h1>
+        <br>
+        <br>
+    </div>
+
+{% endblock %}
