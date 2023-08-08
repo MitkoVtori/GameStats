@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from GameStats.Games.forms import GameForm, CommentGameForm
 from GameStats.Games.generators import game_rating_generator
 from GameStats.Games.models import Game, Comment
@@ -41,6 +41,23 @@ def game_details(request, pk):
     return render(request, "Games/details.html", context)
 
 
+class EditGame(LoginRequiredMixin, UpdateView):
+    template_name = "Games/edit-game.html"
+    form_class = GameForm
+    model = Game
+    context_object_name = "game"
+    success_url = reverse_lazy("all-games")
+
+    def get(self, request, *args, **kwargs):
+        self.extra_context = {"user": self.request.user.get_username()}
+        return super().get(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields['creator'].initial = self.request.user.get_username()
+        return form
+
+
 @login_required
 def comment_game(request, pk):
     game = Game.objects.get(pk=pk)
@@ -63,6 +80,28 @@ def comment_game(request, pk):
 
 
 def comments(request, game):
-    all_comments = Comment.objects.filter(game=game)
+    all_comments = Comment.objects.filter(game=game).order_by("-rating")
 
-    return render(request, "Games/comments.html", {"comments": all_comments})
+    return render(request, "Games/comments.html", {"comments": all_comments, "game": game})
+
+
+class EditComment(LoginRequiredMixin, UpdateView):
+    model = Comment
+    template_name = "Games/edit-comment.html"
+    form_class = CommentGameForm
+    success_url = reverse_lazy("all-games")
+
+    def get(self, request, *args, **kwargs):
+        self.extra_context = {"user": self.request.user.get_username()}
+        return super().get(request, *args, **kwargs)
+
+
+class DeleteComment(LoginRequiredMixin, DeleteView):
+    template_name = "Games/delete-comment.html"
+    model = Comment
+    context_object_name = "comment"
+    success_url = reverse_lazy("all-games")
+
+    def get(self, request, *args, **kwargs):
+        self.extra_context = {"user": self.request.user.get_username()}
+        return super().get(request, *args, **kwargs)

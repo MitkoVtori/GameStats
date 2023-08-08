@@ -1,14 +1,6 @@
 - 2 independent models
 
-- At least 5 custom options (in total) to the admin interface (e.g., filters, list display, ordering, etc.).
-
 - Authenticated users (private part) have full CRUD for all their created content
-
-
-
-• Implement Exception Handling and Data Validation to avoid crashes when invalid data is entered
-(both client-side and server-side)
-o When validating data, show appropriate messages to the user
 
 
 --- Bonuses ---

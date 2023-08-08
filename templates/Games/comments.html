@@ -1,32 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load user_filters %}
+{% load comment_filters %}
 
 {% block content %}
 
     <link rel="stylesheet" href="{% static 'styles/comments.css' %}">
 
-    <div class="comment">
-        <h1 class="username">Sasho the krika</h1>
-        <img class="img" src="{% static 'images/default-user.jpg' %}">
-        <p>⭐⭐⭐⭐⭐</p>
-        <p>This is the best game ever made! it has so many features, that I want to play it all day long! and no matter what you say about my english, i am da best!</p>
-    </div>
-    <div class="comment">
-        <h1 class="username">FaceTheReveal</h1>
-        <img class="img" src="{% static 'images/default-user.jpg' %}">
-        <p>⭐⭐⭐</p>
-        <p>no matter what you say about my english, i am da best!</p>
-    </div>
-    <div class="comment">
-        <h1 class="username">TheMonstersAreTHeTruck</h1>
-        <img class="img" src="{% static 'images/default-user.jpg' %}">
-        <p>⭐</p>
-        <p>g</p>
-    </div>
-    <div class="comment">
-        <h1>Comments for game</h1>
-        <br>
-        <br>
-    </div>
+    {% if not comments %}
+    <p class="no-articles">No comments yet.</p>
+
+    {% else %}
+        {% for comment in comments %}
+        <div class="comment">
+            <h1 class="username">{{ comment.creator }}</h1>
+            {% with comment.creator|UserModel as user %}
+            {% if user.image %}
+            <img class="img" src="../../../..{{ user.image.url }}">
+            {% else %}
+            <img class="img" src="{% static 'images/default-user.jpg' %}">
+            {% endif %}
+            {% endwith %}
+            <p class="stars">{{ comment.rating|stars }}</p>
+            <p class="comment_text">{{ comment.comment }}</p>
+            <div class="buttons">
+                <!-- if owner -->
+                <a href="{% url 'edit-comment' comment.id %}" class="button-edit">🖊️</a>
+                <a href="{% url 'delete-comment' comment.id %}" class="button-delete">🗑</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div style="text-align: center;" class="comment">
+            <h1>Comments for {{ game }}</h1>
+            <br>
+            <br>
+        </div>
+
+    {% endif %}
 
 {% endblock %}
