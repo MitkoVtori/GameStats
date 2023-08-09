@@ -1,6 +1,4 @@
-- 2 independent models
-
-- Authenticated users (private part) have full CRUD for all their created content
+- 1 independent models
 
 
 --- Bonuses ---
@@ -13,13 +11,7 @@
 
 • Host the application in a cloud environment
 
-• Additional functionality
 
 
-
-
-
-
-• Exception handling and/or Data validation (validation in the models and/or the forms) – 0…5
 • Security (prevent SQL injection, XSS, CSRF, parameter tampering, etc.) – 0…5
 • Code quality (well-structured code, following the MTV pattern, following SOLID principles, etc.) – 0…10

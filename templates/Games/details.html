@@ -22,7 +22,7 @@
             <div class="buttons">
                 <!-- if owner -->
                 <a href="{% url 'edit-game' game.id %}" class="button">Edit</a>
-                <a href="#" class="button">Delete</a>
+                <a href="{% url 'delete-game' game.id %}" class="button">Delete</a>
                 <!-- anyone can see -->
                 <a href="{% url 'comments' game.title %}" class="button">Comments</a>
                 <!-- if not owner and .is_authenticated -->

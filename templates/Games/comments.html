@@ -13,7 +13,7 @@
     {% else %}
         {% for comment in comments %}
         <div class="comment">
-            <h1 class="username">{{ comment.creator }}</h1>
+            <h1 class="username">{{ comment.creator|exists }}</h1>
             {% with comment.creator|UserModel as user %}
             {% if user.image %}
             <img class="img" src="../../../..{{ user.image.url }}">
