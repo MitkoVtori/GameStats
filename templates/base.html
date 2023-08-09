@@ -17,10 +17,12 @@
         <nav>
             <!-- if user has a profile -->
             <a href="{% url 'all-games' %}">Games</a>
-            <a href="{% url 'create game' %}">Add Game</a>
-            <a href="#"><u>Report Problem</u></a>
             <!-- if user is staff -->
-            <a href="#">Problems</a>
+            <a href="{% url 'create game' %}">Add Game</a>
+            <!-- if user has a profile -->
+            <a href="{% url 'report-problem' %}"><u>Report Problem</u></a>
+            <a href="{% url 'problems' %}">Problems</a>
+            <!-- if user is staff -->
             <a href="#">Staff</a>
             <!-- if user has a profile -->
             <a href="{% url 'user' %}"><u>Profile</u></a>

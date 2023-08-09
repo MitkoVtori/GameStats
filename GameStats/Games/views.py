@@ -58,6 +58,17 @@ class EditGame(LoginRequiredMixin, UpdateView):
         return form
 
 
+class DeleteGame(LoginRequiredMixin, DeleteView):
+    template_name = "Games/delete-game.html"
+    model = Game
+    context_object_name = "game"
+    success_url = reverse_lazy("all-games")
+
+    def get(self, request, *args, **kwargs):
+        self.extra_context = {"user": self.request.user.get_username()}
+        return super().get(request, *args, **kwargs)
+
+
 @login_required
 def comment_game(request, pk):
     game = Game.objects.get(pk=pk)
