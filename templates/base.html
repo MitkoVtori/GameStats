@@ -23,7 +23,7 @@
             <a href="{% url 'report-problem' %}"><u>Report Problem</u></a>
             <a href="{% url 'problems' %}">Problems</a>
             <!-- if user is staff -->
-            <a href="#">Staff</a>
+            <a href="{% url 'staff-chat' %}">Staff</a>
             <!-- if user has a profile -->
             <a href="{% url 'user' %}"><u>Profile</u></a>
             <a href="{% url 'logout' %}"><u>Logout</u></a>

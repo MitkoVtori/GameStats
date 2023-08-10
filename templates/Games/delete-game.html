@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if user != game.creator %}
+    {% if user.get_username != game.creator %}
     <p class="no-articles">You do not have access to this page!</p>
     {% else %}
     <section id="register-page" class="content auth">

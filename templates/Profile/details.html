@@ -17,7 +17,7 @@
                     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
                     {% endif %}
 
-                    <p class="text">Username: {{ user.username }}</p>
+                    <p class="text">Username: {{ user.get_username }}</p>
 
                     <p class="text">Email: {{ user.email }}</p>
 

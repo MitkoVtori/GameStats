@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from GameStats.Games.forms import GameForm, CommentGameForm
 from GameStats.Games.generators import game_rating_generator
@@ -28,8 +29,6 @@ class GamesView(ListView):
     template_name = "Games/all-games.html"
     model = Game
     context_object_name = "games"
-
-    # Make sort logic
 
 
 def game_details(request, pk):
@@ -65,8 +64,14 @@ class DeleteGame(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("all-games")
 
     def get(self, request, *args, **kwargs):
-        self.extra_context = {"user": self.request.user.get_username()}
         return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        self.object.delete()
+        for comment in Comment.objects.filter(game=self.object.title):
+            comment.delete()
+        return HttpResponseRedirect(success_url)
 
 
 @login_required
