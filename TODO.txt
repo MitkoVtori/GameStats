@@ -1,4 +1,4 @@
-- 1 independent models
+- finish staff chat
 
 
 --- Bonuses ---

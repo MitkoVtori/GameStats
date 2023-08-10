@@ -1,5 +1,6 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
+from GameStats.Profile.validators import image_size
 
 
 class Problem(models.Model):
@@ -26,3 +27,11 @@ class Problem(models.Model):
     creator = models.CharField()
 
     date_reported = models.DateTimeField(auto_now_add=True)
+
+
+class StaffChat(models.Model):
+    content = models.TextField(max_length=500, validators=[MinLengthValidator(1)])
+    image = models.ImageField(upload_to="images", validators=[image_size], blank=True, null=True)
+    creator = models.CharField()
+    date = models.DateTimeField(auto_now_add=True)
+

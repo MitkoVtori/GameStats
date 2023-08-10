@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
-from GameStats.Games.models import Game
+from GameStats.Games.models import Game, Comment
 from GameStats.Profile.forms import AppUserCreationForm, LoginForm, EditAppUserForm, ChangePasswordForm, \
     DeleteAppUserForm
 
@@ -55,7 +55,6 @@ class UserDetails(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {
-            "user": self.request.user,
             "games": Game.objects.filter(creator=self.request.user.get_username())
         }
         return context
@@ -107,4 +106,8 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     def form_valid(self, form):
         success_url = self.get_success_url()
         self.request.user.delete()
+        for game in Game.objects.filter(creator=self.request.user.get_username()):
+            game.delete()
+            for comment in Comment.objects.filter(game=game.title):
+                comment.delete()
         return HttpResponseRedirect(success_url)
