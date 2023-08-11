@@ -24,9 +24,12 @@
             <p class="stars">{{ comment.rating|stars }}</p>
             <p class="comment_text">{{ comment.comment }}</p>
             <div class="buttons">
-                <!-- if owner -->
+                {% if user.get_username == comment.creator or user.is_superuser %}
                 <a href="{% url 'edit-comment' comment.id %}" class="button-edit">🖊️</a>
+                {% endif %}
+                {% if user.get_username == comment.creator or user.is_staff or user.is_superuser %}
                 <a href="{% url 'delete-comment' comment.id %}" class="button-delete">🗑</a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}

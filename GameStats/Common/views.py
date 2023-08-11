@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
-from GameStats.Common.forms import ReportProblemForm, StaffChatForm
-from GameStats.Common.models import Problem, StaffChat
+from GameStats.Common.forms import ReportProblemForm, StaffNotesForm, DeleteStaffNoteForm
+from GameStats.Common.models import Problem, StaffNotes
 
 
 class HomePageView(TemplateView):
@@ -51,19 +52,46 @@ class DeleteProblemView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("problems")
 
 
-class StaffChatView(LoginRequiredMixin, CreateView):
-    template_name = "Common/staff-chat.html"
-    form_class = StaffChatForm
-    success_url = reverse_lazy("staff-chat")
-    model = StaffChat
-    context_object_name = "StaffChat"
+class StaffView(LoginRequiredMixin, ListView):
+    template_name = "Common/staff.html"
+    model = StaffNotes
+    context_object_name = "notes"
+
+
+class AddStaffNote(LoginRequiredMixin, CreateView):
+    template_name = "Common/staff-note.html"
+    form_class = StaffNotesForm
+    success_url = reverse_lazy("staff")
 
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_staff and not self.request.user.is_superuser:
             return redirect("no-access")
         return super().get(request, *args, **kwargs)
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class=form_class)
-        form.fields['creator'].initial = self.request.user.get_username()
-        return form
+
+class EditStaffNote(LoginRequiredMixin, UpdateView):
+    template_name = "Common/edit-note.html"
+    form_class = StaffNotesForm
+    model = StaffNotes
+    context_object_name = "note"
+    success_url = reverse_lazy("staff")
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_staff and not self.request.user.is_superuser:
+            return redirect("no-access")
+        return super().get(request, *args, **kwargs)
+
+
+@login_required
+def delete_staff_note_view(request, pk):
+    note = StaffNotes.objects.get(pk=pk)
+
+    if not request.user.is_staff and not request.user.is_superuser:
+        return redirect("no-access")
+
+    if request.method == "POST":
+        note.delete()
+        return redirect("staff")
+
+    form = DeleteStaffNoteForm(instance=note)
+    return render(request, "Common/delete-note.html", {"form": form, "note": note})

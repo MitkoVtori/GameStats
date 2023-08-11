@@ -21,5 +21,5 @@ urlpatterns = [
     path('', include("GameStats.Common.urls")),
     path('games/', include("GameStats.Games.urls")),
     path('users/', include("GameStats.Profile.urls")),
-    path('admin/', admin.site.urls, name="admin"),
+    path('admin/security/private/command/window/staff/admin/superuser/hidden/access/', admin.site.urls, name="admin"),
 ]

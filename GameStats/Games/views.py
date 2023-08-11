@@ -84,6 +84,7 @@ def comment_game(request, pk):
     comment_form.fields["creator"].initial = request.user.get_username()
 
     context = {
+        "game": game,
         "form": comment_form,
         'pk': pk,
     }
@@ -107,10 +108,6 @@ class EditComment(LoginRequiredMixin, UpdateView):
     form_class = CommentGameForm
     success_url = reverse_lazy("all-games")
 
-    def get(self, request, *args, **kwargs):
-        self.extra_context = {"user": self.request.user.get_username()}
-        return super().get(request, *args, **kwargs)
-
 
 class DeleteComment(LoginRequiredMixin, DeleteView):
     template_name = "Games/delete-comment.html"
@@ -118,6 +115,3 @@ class DeleteComment(LoginRequiredMixin, DeleteView):
     context_object_name = "comment"
     success_url = reverse_lazy("all-games")
 
-    def get(self, request, *args, **kwargs):
-        self.extra_context = {"user": self.request.user.get_username()}
-        return super().get(request, *args, **kwargs)

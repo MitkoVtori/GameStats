@@ -1,5 +1,5 @@
 from django import forms
-from GameStats.Common.models import Problem, StaffChat
+from GameStats.Common.models import Problem, StaffNotes
 
 
 class ReportProblemForm(forms.ModelForm):
@@ -16,12 +16,15 @@ class ReportProblemForm(forms.ModelForm):
         fields = "__all__"
 
 
-class StaffChatForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Type your message here..."}), label="")
-    image = forms.ImageField(required=False)
-    creator = forms.CharField(disabled=True)
-
+class StaffNotesForm(forms.ModelForm):
     class Meta:
-        model = StaffChat
+        model = StaffNotes
         fields = '__all__'
 
+
+class DeleteStaffNoteForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea, label="Note", disabled=True)
+
+    class Meta:
+        model = StaffNotes
+        fields = '__all__'
