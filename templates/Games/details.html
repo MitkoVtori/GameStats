@@ -20,13 +20,14 @@
             </p>
             <!-- Edit/Delete buttons -->
             <div class="buttons">
-                <!-- if owner -->
+                {% if user.get_username == game.creator or user.is_superuser %}
                 <a href="{% url 'edit-game' game.id %}" class="button">Edit</a>
                 <a href="{% url 'delete-game' game.id %}" class="button">Delete</a>
-                <!-- anyone can see -->
+                {% endif %}
                 <a href="{% url 'comments' game.title %}" class="button">Comments</a>
-                <!-- if not owner and .is_authenticated -->
+                {% if user.get_username != game.creator %}
                 <a href="{% url 'add-comment' game.id %}" class="button">Rate</a>
+                {% endif %}
             </div>
         </div>
     </section>

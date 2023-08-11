@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if user.get_username == game.creator %}
+    <p class="no-articles">Can't rate your own game</p>
+    {% else %}
+
     <section id="register-page" class="content auth">
         <form action="{% url 'add-comment' pk %}" id="register" method="post">
             {% csrf_token %}
@@ -17,4 +21,7 @@
             </div>
         </form>
     </section>
+
+    {% endif %}
+
 {% endblock %}
